@@ -13,7 +13,7 @@ COPY src ./src
 
 RUN npm ci
 
-# Set environment variables for the running container
+# Set environment variables for the running container 
 ENV PORT=$PORT
 ENV REDIS_PORT=$REDIS_PORT
 ENV REDIS_HOST=$REDIS_HOST
