@@ -19,3 +19,4 @@ ENV REDIS_PORT=$REDIS_PORT
 ENV REDIS_HOST=$REDIS_HOST
 
 CMD ["npm", "run", "dev", "-y"]
+
