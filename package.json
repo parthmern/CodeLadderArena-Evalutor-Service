@@ -11,7 +11,8 @@
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "npx nodemon ./dist/index.js",
-    "dev": "npx concurrently --kill-others \"npm run watch\" \"npm start\""
+    "dev": "npx concurrently --kill-others \"npm run watch\" \"npm start\"",
+    "devStart" : "npm run build &&  npm start"
   },
   "keywords": [],
   "author": "",
