@@ -22,3 +22,4 @@ ENV REDIS_HOST=$REDIS_HOST
 
 CMD ["npm", "run" ,"devStart"]
 
+ 
