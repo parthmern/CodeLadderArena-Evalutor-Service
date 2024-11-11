@@ -7,9 +7,11 @@ ARG REDIS_HOST
 
 WORKDIR /usr/app/
 
-COPY package.json package-lock.json ./
+# COPY package.json package-lock.json ./
 
-COPY src ./src
+# COPY src ./src
+
+COPY . ./
 
 RUN npm ci
 
