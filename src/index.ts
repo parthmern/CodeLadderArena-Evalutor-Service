@@ -26,7 +26,7 @@ app.listen(serverConfig.PORT, () => {
 
   SampleWorker('SampleQueue');
 
-  SubmissionWorker('SubmissionQueue');
+  SubmissionWorker('SubmissionQueue'); 
   
   // submissionQueueProducer({
   //   "1234" : {
