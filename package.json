@@ -12,7 +12,7 @@
     "prestart": "npm run build",
     "start": "npx nodemon ./dist/index.js",
     "dev": "npx concurrently --kill-others \"npm run watch\" \"npm start\"",
-    "devStart" : "npm run build &&  npm start"
+    "devStart" : "npx tsc &&  npm start"
   },
   "keywords": [],
   "author": "",
