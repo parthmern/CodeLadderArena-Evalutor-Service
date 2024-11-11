@@ -132,3 +132,5 @@ app.listen(serverConfig.PORT, () => {
 
 });
 
+
+export default app;
