@@ -5,15 +5,20 @@ import SubmissionJob from "../jobs/SubmissionJob";
 
 export default function SubmissionWorker(queueName: string) {
     new Worker(
-        queueName, 
+        queueName,
         async (job: Job) => {
-            console.log("SubmissionJob job worker kicking", job?.id);
-            if(job.name === "SubmissionJob") {
-                const submissionJobInstance = new SubmissionJob(job.data);
-                console.log("Calling job handler");
-                submissionJobInstance.handle(job);
+            try {
+                console.log("SubmissionJob job worker kicking", job?.id);
+                if (job.name === "SubmissionJob") {
+                    const submissionJobInstance = new SubmissionJob(job.data);
+                    console.log("Calling job handler");
+                    submissionJobInstance.handle(job);
 
-                return true;
+                    return true;
+                }
+            }catch(error){
+                console.log("submission worker error", error);
+                return false;
             }
         },
         {
