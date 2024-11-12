@@ -87,12 +87,12 @@ export default class SubmissionJob implements IJob {
     
                 console.log("PRODUCING IN EVALU QUEUE.........")
                 // Produce to the evaluation queue with results of all test cases
-                await evaluationQueueProducer({
-                    results, 
-                    userId, 
-                    submissionId, 
-                    overallStatus: allPassed ? "SUCCESS" : "FAILURE"
-                });
+                // await evaluationQueueProducer({
+                //     results, 
+                //     userId, 
+                //     submissionId, 
+                //     overallStatus: allPassed ? "SUCCESS" : "FAILURE"
+                // });
 
                 await postDataToSubmissionService({
                     results, 
