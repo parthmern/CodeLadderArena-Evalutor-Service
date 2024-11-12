@@ -1,7 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 import { Job } from "bullmq";
 
-import evaluationQueueProducer from "../producers/evaluationQueueProducer";
+// import evaluationQueueProducer from "../producers/evaluationQueueProducer";
 // import runCpp from "../containers/runCpp";
 import { IJob } from "../types/bullMqJobDefinition";
 import { ExecutionResponse } from "../types/CodeExecutorStrategy";
