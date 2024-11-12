@@ -82,6 +82,7 @@ export default class SubmissionJob implements IJob {
                     console.log(response);
                 }
     
+                console.log("PRODUCING IN EVALU QUEUE.........")
                 // Produce to the evaluation queue with results of all test cases
                 evaluationQueueProducer({
                     results, 
@@ -101,7 +102,7 @@ export default class SubmissionJob implements IJob {
     
 
     failed = (job?: Job) : void => {
-        console.log("Job failed");
+        console.log("Job failed FAILED FAILED FAILED TO PRODUCE EVALU QUEUE");
         if(job) {
             console.log(job.id);
         }
