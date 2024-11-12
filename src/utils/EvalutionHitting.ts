@@ -7,7 +7,7 @@ import axios, { AxiosResponse } from 'axios';
 //     body: string;
 // }
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://submissionservice.parthmern.store';
 
 
 export default async function postDataToSubmissionService(payload:any): Promise<void> {
