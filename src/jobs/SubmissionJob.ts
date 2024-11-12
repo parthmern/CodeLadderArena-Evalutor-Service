@@ -84,7 +84,7 @@ export default class SubmissionJob implements IJob {
     
                 console.log("PRODUCING IN EVALU QUEUE.........")
                 // Produce to the evaluation queue with results of all test cases
-                evaluationQueueProducer({
+                await evaluationQueueProducer({
                     results, 
                     userId, 
                     submissionId, 
