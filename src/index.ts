@@ -1,7 +1,9 @@
 import bodyParser from "body-parser";
+import { Queue } from "bullmq";
 import express, { Express } from "express"; // Explicit type
 
 import serverAdapter from "./config/bullBoardConfig";
+import redisConnection from "./config/redisConfig";
 import serverConfig from "./config/serverConfig";
 // import submissionQueueProducer from "./producers/submissionQueueProducer";
 // import runCpp from "./containers/runCpp";
@@ -26,8 +28,28 @@ app.listen(serverConfig.PORT, () => {
 
   SampleWorker('SampleQueue');
 
-  SubmissionWorker('SubmissionQueue'); 
-  
+  SubmissionWorker('SubmissionQueue');
+
+  const queue = new Queue('EvaluationQueue', { connection: redisConnection });
+  // const queueEvents = new QueueEvents('EvaluationQueue');
+  addJobAfterDelay();
+  async function addJobAfterDelay() {
+    const payload = { userId: 1, task: 'Evaluate Task' };
+
+    // Delay job addition by 5 seconds
+    setInterval(async () => {
+      // await queue.add("EvaluationJob", payload);
+      // console.log("Job added to the queue:", payload, {priority: 2});
+      const job = await queue.add('EvaluationJob', payload)
+      console.log('Queued')
+
+      // await job.waitUntilFinished(queueEvents);
+      console.log('Done') // This correctly waits until the job is done :)
+
+      console.log(job.returnvalue)
+    }, 1000);  // 5000m s = 5 seconds
+  }
+
   // submissionQueueProducer({
   //   "1234" : {
   //     language : "CPP",
@@ -40,7 +62,7 @@ app.listen(serverConfig.PORT, () => {
   //                 int x;
   //                 cin >> x;
   //                 cout << "value of x is => " << x << endl;
-                  
+
   //                 for(int i=0; i<x; i++){
   //                   cout << i << " ";
   //                 }
@@ -55,7 +77,7 @@ app.listen(serverConfig.PORT, () => {
   // x = input()
   // print("value of x is => ") 
   // `;
-  
+
   // runPython(code, "100");
 
   // ------------------------------------------------------------
@@ -86,7 +108,7 @@ app.listen(serverConfig.PORT, () => {
   //   int x;
   //   cin >> x;
   //   cout << "value of x is => " << x << endl;
-    
+
   //   for(int i=0; i<x; i++){
   //     cout << i << " ";
   //   }
@@ -96,38 +118,38 @@ app.listen(serverConfig.PORT, () => {
 
   // runCpp(code, "10");
 
-// --------------------------------------------
-//   const userCode = `
-  
-//     class Solution {
-//       public:
-//       vector<int> permute() {
-//           vector<int> v;
-//           v.push_back(10);
-//           return v;
-//       }
-//     };
-//   `;
+  // --------------------------------------------
+  //   const userCode = `
 
-//   const STUBcode = `
-//   #include<iostream>
-//   #include<vector>
-//   #include<stdio.h>
-//   using namespace std;
-  
-//   ${userCode}
+  //     class Solution {
+  //       public:
+  //       vector<int> permute() {
+  //           vector<int> v;
+  //           v.push_back(10);
+  //           return v;
+  //       }
+  //     };
+  //   `;
 
-//   int main() {
+  //   const STUBcode = `
+  //   #include<iostream>
+  //   #include<vector>
+  //   #include<stdio.h>
+  //   using namespace std;
 
-//     Solution s;
-//     vector<int> result = s.permute();
-//     for(int x : result) {
-//       cout<<x<<" ";
-//     }
-//     cout<<endl;
-//     return 0;
-//   }
-//   `;
+  //   ${userCode}
+
+  //   int main() {
+
+  //     Solution s;
+  //     vector<int> result = s.permute();
+  //     for(int x : result) {
+  //       cout<<x<<" ";
+  //     }
+  //     cout<<endl;
+  //     return 0;
+  //   }
+  //   `;
 
 
 });
