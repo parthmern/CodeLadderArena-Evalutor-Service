@@ -1,3 +1,4 @@
+/* eslint-disable simple-import-sort/imports */
 import { Job } from "bullmq";
 
 import evaluationQueueProducer from "../producers/evaluationQueueProducer";
@@ -6,6 +7,8 @@ import { IJob } from "../types/bullMqJobDefinition";
 import { ExecutionResponse } from "../types/CodeExecutorStrategy";
 import { SubmissionPayload } from "../types/submissionPayload";
 import createExecutor from "../utils/ExecutorFactory";
+
+import postDataToSubmissionService from "../utils/EvalutionHitting";
 
 export default class SubmissionJob implements IJob {
     name: string;
@@ -90,12 +93,23 @@ export default class SubmissionJob implements IJob {
                     submissionId, 
                     overallStatus: allPassed ? "SUCCESS" : "FAILURE"
                 });
+
+                await postDataToSubmissionService({
+                    results, 
+                    userId, 
+                    submissionId, 
+                    overallStatus: allPassed ? "SUCCESS" : "FAILURE"
+                });
     
                 if (allPassed) {
                     console.log("All test cases passed successfully");
                 } else {
                     console.log("Some test cases failed");
                 }
+
+
+                
+
             }
         }
     };
