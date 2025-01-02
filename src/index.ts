@@ -23,6 +23,7 @@ app.use('/bullboardui', serverAdapter.getRouter());
 app.listen(serverConfig.PORT, () => {
   console.log(`server started running on- ${serverConfig.PORT}`);
   console.log(`BullBoard dashboard running on: http://localhost:${serverConfig.PORT}/bullboardui`);
+  console.log(serverConfig.REDIS_PORT,serverConfig.REDIS_HOST, serverConfig.REDIS_PASSWORD);
 
   SampleWorker('SampleQueue');
 
