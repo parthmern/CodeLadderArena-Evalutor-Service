@@ -25,6 +25,6 @@ redisConnection.on('error', (err) => {
     console.error('Error connecting to Redis:', err);
 });
 
-console.log(`Redis dashboard running on: http://localhost:8001`);
+console.log(`Redis dashboard running on: http://localhost:8001`, redisConfig);
 
 export default redisConnection;
