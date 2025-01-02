@@ -11,6 +11,18 @@ const redisConfig = {
 
 const redisConnection = new Redis(redisConfig);
 
+redisConnection.on('connect', () => {
+    console.log('Redis client connected successfully!');
+});
+
+redisConnection.on('ready', () => {
+    console.log('Redis client is ready to use!');
+});
+
+redisConnection.on('error', (err) => {
+    console.error('Error connecting to Redis:', err);
+});
+
 console.log(`Redis dashboard running on: http://localhost:8001`);
 
 export default redisConnection;
