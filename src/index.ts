@@ -21,7 +21,7 @@ app.use("/api", apiRouter);
 app.use('/bullboardui', serverAdapter.getRouter());
 
 app.listen(serverConfig.PORT, () => {
-  console.log(`chnaged server started running on- ${serverConfig.PORT} on ${serverConfig.REDIS_PASSWORD}`, serverConfig.REDIS_PORT,serverConfig.REDIS_HOST, serverConfig.REDIS_PASSWORD);
+  console.log(`chnaged ch server started running on- ${serverConfig.PORT} on ${serverConfig.REDIS_PASSWORD}`, serverConfig.REDIS_PORT,serverConfig.REDIS_HOST, serverConfig.REDIS_PASSWORD);
   console.log(`BullBoard dashboard running on: http://localhost:${serverConfig.PORT}/bullboardui `, serverConfig.REDIS_PORT,serverConfig.REDIS_HOST, serverConfig.REDIS_PASSWORD);
   console.log(serverConfig.REDIS_PORT,serverConfig.REDIS_HOST, serverConfig.REDIS_PASSWORD);
 
