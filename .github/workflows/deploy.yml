@@ -18,10 +18,10 @@ jobs:
     - name: Check Out Repo
       uses: actions/checkout@v2
 
-    - name: Install Node modules "npm install" 
+    - name: Install Node modules
       run: npm ci
 
-    - name: Running Tests "npm run test"
+    - name: Run Tests
       run: npm run test
 
     - name: Log in to Docker Hub
@@ -36,15 +36,16 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: pptl8685/evalutor-service:latest  
+        tags: pptl8685/evalutor-service:latest
+        no-cache: true # Avoid using cache from previous builds
         build-args: |
           PORT=${{ secrets.PORT }}
           REDIS_PORT=${{ secrets.REDIS_PORT }}
           REDIS_HOST=${{ secrets.REDIS_HOST }}
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
 
     - name: Verify Pushed Image
-      run: docker pull pptl8685/evalutor-service:latest 
+      run: docker pull pptl8685/evalutor-service:latest
 
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
@@ -56,10 +57,10 @@ jobs:
           sudo docker pull pptl8685/evalutor-service:latest
           sudo docker stop web-app || true
           sudo docker rm web-app || true
-          sudo usermod -aG docker $USER
-          sudo chmod 666 /var/run/docker.sock
-          sudo systemctl restart docker
-          sudo journalctl -u docker.service
-          sudo docker run -d --name web-app -p ${{ secrets.PORT }}:${{ secrets.PORT }} -v /var/run/docker.sock:/var/run/docker.sock pptl8685/evalutor-service:latest
-
-          
+          sudo docker run -d --name web-app \
+            -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
+            -e PORT=${{ secrets.PORT }} \
+            -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
+            -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
+            -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
+            pptl8685/evalutor-service:latest
