@@ -7,7 +7,7 @@ console.log(ServerConfig.REDIS_PORT,ServerConfig.REDIS_HOST, ServerConfig.REDIS_
 const redisConfig = {
     port: ServerConfig.REDIS_PORT,
     host: ServerConfig.REDIS_HOST,
-    password: ServerConfig.REDIS_PASSWORD,
+    password: "vCllaXi36UI32HKDRE2XFUcqwPIfSsEf",
     maxRetriesPerRequest: null, // Allow the custom retry strategy to manage retries
     retryStrategy: (times:any) => {
         if (times >= 10) {
