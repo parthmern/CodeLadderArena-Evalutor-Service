@@ -54,13 +54,19 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          sudo docker pull pptl8685/evalutor-service:latest
-          sudo docker stop web-app || true
-          sudo docker rm web-app || true
+          sudo usermod -aG docker $USER && \
+          sudo chmod 666 /var/run/docker.sock && \
+          sudo systemctl restart docker && \
+          sudo journalctl -u docker.service && \
+          sudo docker pull pptl8685/evalutor-service:latest && \
+          sudo docker stop web-app || true && \
+          sudo docker rm web-app || true && \
           sudo docker run -d --name web-app \
-            -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
-            -e PORT=${{ secrets.PORT }} \
-            -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
-            -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
-            -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
-            pptl8685/evalutor-service:latest
+              -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
+              -e PORT=${{ secrets.PORT }} \
+              -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
+              -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
+              -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
+              -v /var/run/docker.sock:/var/run/docker.sock \
+              pptl8685/evalutor-service:latest
+
